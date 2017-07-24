@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', include('apps.login.urls')),
     url(r'^home/', include('apps.home.urls')),
+    url(r'^devops/', include('apps.devops.urls')),
 ]

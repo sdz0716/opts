@@ -16,8 +16,9 @@ def loginView(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'home/home.html')
+            return HttpResponseRedirect('../home/')
         else:
             return render(request, 'login/login.html', {'user': user})
     else:
         return render(request, 'login/login.html')
+        # raise Http404('wrong')

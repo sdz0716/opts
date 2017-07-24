@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}tables{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="/static/bootstrap-table-develop/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block script %}
+    <script src="/static/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+    <script src="/static/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+{% endblock %}
+
+{% block subPagesActive %}"active"{% endblock %}
+
+{% block ariaExpanded %}"true"{% endblock %}
+
+{% block tablesActive %}"active"{% endblock %}
+
+{% block collapse %}"collapse in"{% endblock %}
+
+{% block main %}
+    <div class="panel panel-headline">
+        <div class="panel-heading">
+            <h3 class="panel-title">Server List</h3>
+        </div>
+        <div class="panel-body">
+            <div id="toolbar" class="btn-group">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    添加服务器信息
+                                </h4>
+                            </div>
+                            <form action="addserverinfo.html" method="post" class="form-horizontal" role="form">{% csrf_token %}
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="formInstance" class="col-sm-3 control-label">实例</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formInstance" name="formInstance" placeholder="请输入实例名称">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formHostname" class="col-sm-3 control-label">主机名</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="formHostname" class="form-control" id="formHostname" placeholder="请输入主机名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formIP" class="col-sm-3 control-label">IP</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formIP" name="formIP" placeholder="请输入服务器IP">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formComputer" class="col-sm-3 control-label">宿主机</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formComputer" name="formComputer" placeholder="请输入宿主机IP">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formCpucore" class="col-sm-3 control-label">CPU</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formCpucore" name="formCpucore" placeholder="请输入CPU核心数量">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formMemory" class="col-sm-3 control-label">内存</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formMemory" name="formMemory" placeholder="请输入内存大小">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formSystem" class="col-sm-3 control-label">系统</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formSystem" name="formSystem" placeholder="请输入系统名称">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formSystemdisk" class="col-sm-3 control-label">系统盘</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formSystemdisk" name="formSystemdisk" placeholder="请输入系统盘容量">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formDatadisk" class="col-sm-3 control-label">数据盘</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formDatadisk" name="formDatadisk" placeholder="请输入数据盘容量">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formUser" class="col-sm-3 control-label">使用者</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formUser"name="formUser" placeholder="请输入使用者或组别名称">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formUse" class="col-sm-3 control-label">用途</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formUse" name="formUse" placeholder="请输入服务器用途">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formRemark" class="col-sm-3 control-label">备注</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="formRemark" name="formRemark" placeholder="请输入备注信息">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    提交
+                                </button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+                <button type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </button>
+            </div>
+            <table id="serverlist" class="display table table-hover" data-toggle="table"
+                   data-url = '/devops/serverinfo'
+                   data-method = 'get'
+                   data-pagination = 'true'
+                   data-side-pagination = 'server'
+                   data-page-list = '[10, 20, 50, 100, 200]'
+                   data-search = 'true' data-mobile-responsive = 'true' data-search-on-enter-key = "true"
+                   data-show-refresh = 'true'
+                   data-show-columns = 'true'
+                   data-show-toggle = 'true'
+                   data-page-size = 10
+                   data-toolbar="#toolbar"
+                   data-striped = 'true'>
+                <thead>
+                    <tr>
+                    <th data-field = 'state' data-checkbox = 'true'></th>
+                    <th data-formatter = 'runningFormatter'>序号</th>
+                    <th data-field = 'instance' data-sortable = 'true'>实例</th>
+                    <th data-field = 'hostname' data-sortable = 'true'>主机名</th>
+                    <th data-field = 'ip' data-sortable = 'true'>IP</th>
+                    <th data-field = 'hostcomputer' data-sortable = 'true'>宿主机</th>
+                    <th data-field = 'cpucore' data-sortable = 'true'>CPU</th>
+                    <th data-field = 'memory' data-sortable = 'true'>内存</th>
+                    <th data-field = 'system' data-sortable = 'true'>系统</th>
+                    <th data-field = 'systemdisk' data-sortable = 'true'>系统盘</th>
+                    <th data-field = 'datadisk' data-sortable = 'true'>数据盘</th>
+                    <th data-field = 'user' data-sortable = 'true'>使用者</th>
+                    <th data-field = 'use' data-sortable = 'true'>用途</th>
+                    <th data-field = 'remark' data-sortable = 'true'>备注</th>
+                    <th data-field = 'alter_time' data-sortable = 'true'>创建时间</th>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
