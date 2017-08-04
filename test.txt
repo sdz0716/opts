@@ -1,41 +1,47 @@
-{% extends 'base.html' %}
+< th
+data - formatter = 'runningFormatter' > 序号 < / th >
+< th
+data - field = 'instance'
+data - sortable = 'true' > 实例 < / th >
+< th
+data - field = 'hostname'
+data - sortable = 'true' > 主机名 < / th >
+< th
+data - field = 'ip'
+data - sortable = 'true' > IP < / th >
+< th
+data - field = 'hostcomputer'
+data - sortable = 'true' > 宿主机 < / th >
+< th
+data - field = 'cpucore'
+data - sortable = 'true' > CPU < / th >
+< th
+data - field = 'memory'
+data - sortable = 'true' > 内存 < / th >
+< th
+data - field = 'system'
+data - sortable = 'true' > 系统 < / th >
+< th
+data - field = 'systemdisk'
+data - sortable = 'true' > 系统盘 < / th >
+< th
+data - field = 'datadisk'
+data - sortable = 'true' > 数据盘 < / th >
+< th
+data - field = 'user'
+data - sortable = 'true' > 使用者 < / th >
+< th
+data - field = 'use'
+data - sortable = 'true' > 用途 < / th >
+< th
+data - field = 'remark'
+data - sortable = 'true' > 备注 < / th >
+< th
+data - field = 'alter_time'
+data - sortable = 'true' > 创建时间 < / th >
 
-{% block title %}tables{% endblock %}
 
-{% block link %}
-    <link rel="stylesheet" href="/static/bootstrap-table-develop/dist/bootstrap-table.css">
-{% endblock %}
-
-{% block script %}
-    <script src="/static/bootstrap-table-develop/dist/bootstrap-table.js"></script>
-    <script src="/static/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
-{% endblock %}
-
-{% block subPagesActive %}"active"{% endblock %}
-
-{% block ariaExpanded %}"true"{% endblock %}
-
-{% block tablesActive %}"active"{% endblock %}
-
-{% block collapse %}"collapse in"{% endblock %}
-
-{% block main %}
-    <div class="panel panel-headline">
-        <div class="panel-heading">
-            <h3 class="panel-title">Server List</h3>
-        </div>
-        <div class="panel-body">
-            <div id="toolbar" class="btn-group" >
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" href="/devops/addserverinfo.html"  data-trigger="hover" title="添加服务器">
-                    <i class="glyphicon glyphicon-plus" ></i>
-                </button>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-                <!-- 原始-模态框（Modal）BEGIN -->
-                <!-- div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -133,93 +139,6 @@
                         </div>
                     </div>
                 </div -->
-                <!-- 原始-模态框（Modal）END -->
-                <button id='myButton' type="button" class="btn btn-default" data-target="#modifyModal" data-trigger="hover"  title="修改服务器信息">
-                    <i class="glyphicon glyphicon-pencil" ></i>
-                </button>
-                <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-trash"></i>
-                </button>
-            </div>
-            <table id="serverlist" class="display table table-hover" data-toggle="table"
-                   data-url = '/devops/serverinfo'
-                   data-method = 'get'
-                   data-pagination = 'true'
-                   data-side-pagination = 'server'
-                   data-page-list = '[10, 20, 50, 100, 200]'
-                   data-search = 'true' data-mobile-responsive = 'true' data-search-on-enter-key = "true"
-                   data-show-refresh = 'true'
-                   data-show-columns = 'true'
-                   data-show-toggle = 'true'
-                   data-page-size = 10
-                   data-toolbar="#toolbar"
-                   data-striped = 'true'>
-                <thead>
-                    <tr>
-                    <th data-field = 'state' data-checkbox = 'true'></th>
-                    <th data-formatter = 'runningFormatter'>序号</th>
-                    <th data-field = 'id' data-sortable = 'true'>ID</th>
-                    <th data-field = 'instance' data-sortable = 'true'>实例</th>
-                    <th data-field = 'hostname' data-sortable = 'true'>主机名</th>
-                    <th data-field = 'ip' data-sortable = 'true'>IP</th>
-                    <th data-field = 'hostcomputer' data-sortable = 'true'>宿主机</th>
-                    <th data-field = 'cpucore' data-sortable = 'true'>CPU</th>
-                    <th data-field = 'memory' data-sortable = 'true'>内存</th>
-                    <th data-field = 'system' data-sortable = 'true'>系统</th>
-                    <th data-field = 'systemdisk' data-sortable = 'true'>系统盘</th>
-                    <th data-field = 'datadisk' data-sortable = 'true'>数据盘</th>
-                    <th data-field = 'user' data-sortable = 'true'>使用者</th>
-                    <th data-field = 'use' data-sortable = 'true'>用途</th>
-                    <th data-field = 'remark' data-sortable = 'true'>备注</th>
-                    <th data-field = 'alter_time' data-sortable = 'true'>修改时间</th>
-                    <th data-field = 'create_time' data-sortable = 'true'>创建时间</th>
-{#                    <th data-field="action" data-formatter="actionFormatter">操作</th>#}
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-    <script>
-    $.ajaxSetup({headers: {'X-CSRFToken': '{{ csrf_token }}'}});
-
-{#    function actionFormatter(value, row, index){#}
-{#        return ['<a class="edit ml10" href="/devops/modifyserverinfo.html" title="Edit">',#}
-{#        '<i class="glyphicon glyphicon-edit"></i>',#}
-{#        '</a>',#}
-{#        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',#}
-{#        '<i class="glyphicon glyphicon-remove"></i>',#}
-{#        '</a>'].join('');#}
-{#    }#}
-
-    var $table = $('#serverlist'),
-        $button = $('#myButton');
 
 
-    $(function () {
-        $button.click(function () {
-            var selectd_id = $table.bootstrapTable('getSelections')[0]['id'];
-            if(($table.bootstrapTable('getSelections')).length < 2)
-            {
-                $button.attr('data-toggle', "modal");
-{#                $.post('/devops/modifyserverinfo.html', {'value':JSON.stringify($table.bootstrapTable('getSelections'))});#}
-{#                alert($table.bootstrapTable('getSelections')[0]['id'])#}
-                $button.attr('href', "/devops/modifyserverinfo/"+ selectd_id + '/')
-            }
-            else
-            {
-{#                alert(JSON.stringify($table.bootstrapTable('getSelections')))#}
-{#                alert(JSON.stringify($table.bootstrapTable('getSelections')[0]['id']));#}
-{#                alert($.map($table.bootstrapTable('getSelections'), function (row) {#}
-{#            return row.id}));#}
-{#                $.post('/devops/modifyserverinfo.html', {'value': 0})#}
-                alert('每次只能选择一行进行编辑')
-            }
-        });
-    });
-    </script>
-{% endblock %}
+ href="/devops/modifyserverinfo"

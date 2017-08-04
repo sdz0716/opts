@@ -5,11 +5,19 @@
     &times;
     </button>
     <h4 class="modal-title" id="myModalLabel">
-    添加服务器信息
+    修改服务器信息
     </h4>
 </div>
 
-<form action="addserverinfo.html" method="post" class="form-horizontal" role="form">{% csrf_token %}
+{#{% if messages %}#}
+{#<ul class="messages">#}
+{#    {% for message in messages %}#}
+{#    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
+{#{% endif %}#}
+
+<form id='modifyPost' method="post" class="form-horizontal" role="form">{% csrf_token %}
     <div class="modal-body">
         {% for field in serverInfo %}
             <div class="form-group">
@@ -27,10 +35,17 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">
         关闭
         </button>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" id="modifyButton">
         提交
         </button>
     </div>
 </form>
-
+<script>
+        $(function () {
+        $('#modifyButton').click(function () {
+            var selectd_id = $table.bootstrapTable('getSelections')[0]['id'];
+            $('#modifyPost').attr('action', "/devops/modifyserverinfo/"+ selectd_id + '/')
+        })
+    })
+</script>
 
