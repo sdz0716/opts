@@ -8,6 +8,7 @@ from django.forms import widgets as Fwidgets
 class serverInfoForm(ModelForm):
     class Meta:
         model = apps.devops.models.serverList
+        ordering = ['-id']
         fields = '__all__'
         # exclude = ['alter_time']
         # fields = ('instance', 'hostname' )
@@ -31,11 +32,11 @@ class serverInfoForm(ModelForm):
             'hostname': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入主机名'}),
             'ip': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入服务器IP'}),
             'hostcomputer': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入宿主机IP'}),
-            'cpucore': Fwidgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '请输入CPU核心数量'}),
-            'memory': Fwidgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '请输入内存大小'}),
+            'cpucore': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入CPU核心数量'}),
+            'memory': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入内存大小'}),
             'system': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入系统名称'}),
-            'systemdisk': Fwidgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '请输入系统盘容量'}),
-            'datadisk': Fwidgets.NumberInput(attrs={'class': 'form-control', 'placeholder': '请输入数据盘容量'}),
+            'systemdisk': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入系统盘容量'}),
+            'datadisk': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入数据盘容量'}),
             'user': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入使用者或组别名称'}),
             'use': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入服务器用途'}),
             'remark': Fwidgets.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入备注信息'}),

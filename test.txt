@@ -142,3 +142,15 @@ data - sortable = 'true' > 创建时间 < / th >
 
 
  href="/devops/modifyserverinfo"
+
+    $(function () {
+        $button.click(function () {
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+        });
+    });

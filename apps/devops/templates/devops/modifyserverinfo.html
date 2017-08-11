@@ -32,20 +32,26 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="modifyCloseButton">
         关闭
         </button>
-        <button type="submit" class="btn btn-primary" id="modifyButton">
+        <button type="submit" class="btn btn-primary" id="modifyPostButton">
         提交
         </button>
     </div>
 </form>
 <script>
-        $(function () {
-        $('#modifyButton').click(function () {
+    $(function () {
+        $('#modifyPostButton').click(function () {
             var selectd_id = $table.bootstrapTable('getSelections')[0]['id'];
             $('#modifyPost').attr('action', "/devops/modifyserverinfo/"+ selectd_id + '/')
         })
     })
+    
+{#    $(function () {#}
+{#        $('#modifyCloseButton').click(function () {#}
+{#            window.location.href="tables.html";#}
+{#        })#}
+{#    })#}
 </script>
 

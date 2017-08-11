@@ -134,7 +134,7 @@
                     </div>
                 </div -->
                 <!-- 原始-模态框（Modal）END -->
-                <button id='myButton' type="button" class="btn btn-default" data-target="#modifyModal" data-trigger="hover"  title="修改服务器信息">
+                <button id='modifyButton' type="button" class="btn btn-default" data-target="#modifyModal" data-trigger="hover"  title="修改服务器信息">
                     <i class="glyphicon glyphicon-pencil" ></i>
                 </button>
                 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalLabel" aria-hidden="true">
@@ -142,9 +142,17 @@
                         <div class="modal-content"></div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-default">
+                <button id='deleteButton' type="button" class="btn btn-default" data-trigger="hover"  title="删除服务器信息">
                     <i class="glyphicon glyphicon-trash"></i>
                 </button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importModal" href="/devops/importserverinfo.html"  data-trigger="hover" title="导入列表">
+                    <i class="glyphicon glyphicon-import"></i>
+                </button>
+                <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
             </div>
             <table id="serverlist" class="display table table-hover" data-toggle="table"
                    data-url = '/devops/serverinfo'
@@ -163,7 +171,7 @@
                     <tr>
                     <th data-field = 'state' data-checkbox = 'true'></th>
                     <th data-formatter = 'runningFormatter'>序号</th>
-                    <th data-field = 'id' data-sortable = 'true'>ID</th>
+{#                    <th data-field = 'id' data-sortable = 'true'>ID</th>#}
                     <th data-field = 'instance' data-sortable = 'true'>实例</th>
                     <th data-field = 'hostname' data-sortable = 'true'>主机名</th>
                     <th data-field = 'ip' data-sortable = 'true'>IP</th>
@@ -197,14 +205,24 @@
 {#    }#}
 
     var $table = $('#serverlist'),
-        $button = $('#myButton');
+        $button = $('#modifyButton'),
+        $delbutton = $('#deleteButton');
 
 
     $(function () {
         $button.click(function () {
-            var selectd_id = $table.bootstrapTable('getSelections')[0]['id'];
-            if(($table.bootstrapTable('getSelections')).length < 2)
+            var h = document.getElementById('modifyButton')
+            if(h.getAttribute('href') !== '')
             {
+                h.removeAttribute('href');
+                h.removeAttribute('data-toggle')
+                $('#modifyModal').on("hidden.bs.modal",function (e) {
+                    $(this).removeData();//清除modifyModal缓存信息，避免选中-打开-关闭-选中-打开后，仍为先前传值生成的页面
+                });
+            }
+            if(($table.bootstrapTable('getSelections')).length === 1)
+            {
+                var selectd_id = $table.bootstrapTable('getSelections')[0]['id'];
                 $button.attr('data-toggle', "modal");
 {#                $.post('/devops/modifyserverinfo.html', {'value':JSON.stringify($table.bootstrapTable('getSelections'))});#}
 {#                alert($table.bootstrapTable('getSelections')[0]['id'])#}
@@ -217,9 +235,37 @@
 {#                alert($.map($table.bootstrapTable('getSelections'), function (row) {#}
 {#            return row.id}));#}
 {#                $.post('/devops/modifyserverinfo.html', {'value': 0})#}
-                alert('每次只能选择一行进行编辑')
+                alert('需要选择一行进行编辑')
             }
         });
     });
+
+    $(function () {
+        $delbutton.click(function () {
+{#            var ids = $table.bootstrapTable('getSelections')#}
+             var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+             console.log(ids)
+            if(ids.length == 0){
+                alert('请选择数据');
+                return;
+            }
+            if(confirm("确认删除吗?")){
+{#                var delList = [];#}
+{#                for (var i=0; i<ids.length; i++ ){#}
+{#                    delList.push(ids[i]);#}
+                    $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: ids
+                })
+                    $.post('/devops/deleteserverinfo',{'delList': ids}, function (state) {
+                    alert(state)
+                })
+                }
+
+{#            }#}
+        })
+    })
     </script>
 {% endblock %}

@@ -12,6 +12,7 @@ import datetime
 from apps.devops import forms
 from django.contrib import messages
 from apps.devops import models
+import openpyxl
 
 @login_required()
 def tables(request):
@@ -98,3 +99,39 @@ def modifyServerInfo(request, selectd_id):
         form = forms.serverInfoForm(instance=obj)
         # print(form)
     return render(request, 'devops/modifyserverinfo.html', {'serverInfo': form})
+
+@login_required()
+def deleteServerInfo(request):
+    print(request.POST.getlist('delList[]'))
+    for i in request.POST.getlist('delList[]'):
+        i = int(i)
+        models.serverList.objects.filter(id=i).delete()
+    return HttpResponse('success')
+
+@login_required()
+def importServerInfo(request):
+    if request.method == 'POST':
+        myfile = request.FILES.get('file')
+        wb = openpyxl.load_workbook(myfile)
+        sheet = wb.get_active_sheet()
+        serverDict = {}
+        try:
+            for r in range(2, sheet.max_row+1):
+                serverDict['instance'] = sheet.cell(row=r, column=1).value
+                serverDict['hostname'] = sheet.cell(row=r, column=2).value
+                serverDict['ip'] = sheet.cell(row=r, column=3).value
+                serverDict['hostcomputer'] = sheet.cell(row=r, column=4).value
+                serverDict['cpucore'] = sheet.cell(row=r, column=5).value
+                serverDict['memory'] = sheet.cell(row=r, column=6).value
+                serverDict['system'] = sheet.cell(row=r, column=7).value
+                serverDict['systemdisk'] = sheet.cell(row=r, column=8).value
+                serverDict['datadisk'] = sheet.cell(row=r, column=9).value
+                serverDict['user'] = sheet.cell(row=r, column=10).value
+                serverDict['use'] = sheet.cell(row=r, column=11).value
+                serverDict['remark'] = sheet.cell(row=r, column=12).value
+                models.serverList.objects.create(**serverDict)
+        except:
+            return HttpResponse('<script>alert("导入失败，请检查是否有重复数据");window.history.back(-1);</script>')
+        return HttpResponseRedirect('tables.html')
+    else:
+        return render(request, 'devops/importserverinfo.html')

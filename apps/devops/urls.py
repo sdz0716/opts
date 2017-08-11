@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^addserverinfo', views.addServerInfo, name='addserverinfo'),
     url(r'^modifyserverinfo/(\d+)/$', views.modifyServerInfo, name='modifyserverinfo'),
     url(r'^modifyserverinfo/$', views.modifyServerInfo, name='modifyserverinfoPost'),
+    url(r'^deleteserverinfo', views.deleteServerInfo, name='deleteserverinfo'),
+    url(r'^importserverinfo', views.importServerInfo, name='importserverinfo'),
 ]
